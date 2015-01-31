@@ -32,7 +32,7 @@ GEM
     bson_ext (1.12.0)
       bson (~> 1.12.0)
     builder (3.2.2)
-    coffee-rails (4.0.1)
+    coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
     coffee-script (2.3.0)
@@ -133,7 +133,6 @@ PLATFORMS
 
 DEPENDENCIES
   bson_ext
-  coffee-rails (~> 4.0.0)
   jbuilder (~> 2.0)
   jquery-rails
   mongo_mapper
