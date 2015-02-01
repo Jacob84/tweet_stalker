@@ -3,6 +3,15 @@ module EntityUrlEnumeration
   OTHER = 9999
 end
 
+
+class TwitterListManager
+  def initialize()
+  end
+
+  def sync_list_timeline
+  end
+end
+
 class EntityUrlAnalyzer
 
   def should_be_analyzed?(entity_url)

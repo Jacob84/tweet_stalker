@@ -37,5 +37,11 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'mongo_mapper'
+
 gem 'bson_ext'
+
 gem 'rspec', '~> 3.0'
+
+gem 'rspec-rails'
+
+gem 'twitter'
