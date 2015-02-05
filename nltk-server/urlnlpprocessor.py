@@ -20,7 +20,8 @@ class UrlNlpProcessorResult:
         self.text = text
 
     def set_noun_phrases(self, noun_phrases):
-        self.noun_phrases = noun_phrases
+        self.noun_phrases = list(set(noun_phrases))
+        self.noun_phrases = sorted(self.noun_phrases, key=lambda r:r[1], reverse=True)[0:10]
 
     def set_times(self, total_time, download_time, parsing_time):
         self.total_time = total_time
@@ -30,11 +31,11 @@ class UrlNlpProcessorResult:
     def to_json(self):
         data = {
             'url': self.url,
-            'created_at'  : datetime.datetime.now(),
+            'created_at'  : str(datetime.datetime.now()),
             'title': self.title,
             'first_headings' : self.first_headings,
-            'second_headings': self.second_headings,
-            'third_headings': self.third_headings,
+            #'second_headings': self.second_headings,
+            #'third_headings': self.third_headings,
             # 'text': self.text,
             'noun_phrases': self.noun_phrases,
             'download_time': self.download_time,
@@ -51,8 +52,8 @@ class NlpProcessor:
     def process(self, text):
         textblob = TextBlob(text)
         noun_phrases = textblob.noun_phrases
-        noun_phrases_frequency = [(n, textblob.noun_phrases.count(n)) for n in noun_phrases]
-        return noun_phrases_frequency
+        noun_phrases_importance = [(n, textblob.noun_phrases.count(n)) for n in noun_phrases]
+        return noun_phrases_importance
 
 class UrlNlpProcessor:
     def __init__(self):
@@ -78,13 +79,11 @@ class UrlNlpProcessor:
 
         noun_phrases_importance = list([(x, y + 5) if x.lower() in soup.title.string.lower() else (x,y) for (x,y) in noun_phrases_importance])
         noun_phrases_importance = list([(x, y + 5) if x.lower() in lowered_headings else (x,y) for (x,y) in noun_phrases_importance])
-        noun_phrases_importance = list(set(noun_phrases_importance))
-        noun_phrases_importance = sorted(noun_phrases_importance, key=lambda r:r[1], reverse=True)[0:10]
 
         end_method = time.time()
 
         result = UrlNlpProcessorResult(url)
-        result.set_title(soup.title.string)
+        result.set_title(soup.title.string if soup.title is not None else "no title")
         result.set_headings(headings1, headings2, headings3)
         result.set_text(relevant_text.text)
         result.set_noun_phrases(noun_phrases_importance)

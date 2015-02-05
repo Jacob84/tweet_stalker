@@ -25,8 +25,8 @@ RSpec.describe TwitterListManager do
 
     it 'should map fields correctly' do
       tweet = Tweet.all.first
-      expect(tweet.twitter_list_id).to eq LIST_ID.to_s
-      expect(tweet.twitter_tweet_id).to eq TWEET_ID.to_s
+      expect(tweet.twitter_list_id).to eq LIST_ID
+      expect(tweet.twitter_tweet_id).to eq TWEET_ID
       expect(tweet.text).to eq TWEET_TEXT
       expect(tweet.favorite_count).to eq TWEET_FAVORITE_COUNT
       expect(tweet.retweet_count).to eq TWEET_RETWEET_COUNT
@@ -35,18 +35,18 @@ RSpec.describe TwitterListManager do
 
   context 'when previous tweets' do
     before do
-      Tweet.create({:twitter_tweet_id => '123132'})
+      Tweet.create({:twitter_tweet_id => 123132})
     end
 
     it 'should call with since_id' do
       @wrapper.sync_list_timeline(LIST_ID)
-      expect(@client).to have_received(:list_timeline).with(LIST_ID, {:since_id => '123132'})
+      expect(@client).to have_received(:list_timeline).with(LIST_ID, {:since_id => 123132})
     end
 
     it 'should map fields correctly' do
       tweet = Tweet.all.first
-      expect(tweet.twitter_list_id).to eq LIST_ID.to_s
-      expect(tweet.twitter_tweet_id).to eq TWEET_ID.to_s
+      expect(tweet.twitter_list_id).to eq LIST_ID
+      expect(tweet.twitter_tweet_id).to eq TWEET_ID
       expect(tweet.text).to eq TWEET_TEXT
       expect(tweet.favorite_count).to eq TWEET_FAVORITE_COUNT
       expect(tweet.retweet_count).to eq TWEET_RETWEET_COUNT

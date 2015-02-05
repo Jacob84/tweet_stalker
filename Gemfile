@@ -45,3 +45,5 @@ gem 'rspec', '~> 3.0'
 gem 'rspec-rails'
 
 gem 'twitter'
+
+gem 'httparty'

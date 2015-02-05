@@ -3,8 +3,9 @@ class Tweet
 
   one :twitter_user
 
-  key :twitter_list_id, String
-  key :twitter_tweet_id, String
+  key :twitter_list_id, Integer
+  key :twitter_tweet_id, Integer
+
   key :created_at, DateTime
   key :text, String
   key :user_mentions, String

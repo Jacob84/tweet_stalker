@@ -46,6 +46,9 @@ class RelevantContentRetriever:
         return better_node
 
     def __process_current_node__(self, node, depth_level = 0):
+        if node is None:
+            return
+
         children = node.children
         for node in children:
             try:
