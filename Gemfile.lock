@@ -82,6 +82,9 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     naught (1.0.0)
+    neat (1.5.1)
+      bourbon (>= 3.1)
+      sass (~> 3.2.19)
     plucky (0.6.6)
       mongo (~> 1.5)
     rack (1.5.2)
@@ -177,6 +180,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   mongo_mapper
+  neat
   rails (= 4.1.8)
   rspec (~> 3.0)
   rspec-rails
