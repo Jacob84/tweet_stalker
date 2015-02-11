@@ -6,7 +6,19 @@
 </script>
 
 <script type="text/template" id="tweet_template">
-  <%%= model.get('text') %>
+  <div class="feed_tweet">
+    <div class="left">
+      <img src='{{= model.get('twitter_user').profile_image_url }}' alt='image' %/>
+    </div>
+    <div class="right">
+      <div class="datetime">{{=model.get('created_at')}}</div>
+      <div class="username"><{{=model.get('twitter_user').user_screen_name}}</div>
+      <div class="text">{{= model.get('text') }}</div>
+      <div class="noun_phrase">
+        {{ _.each(model.get('noun_phrases').split('|'), function(name) { }} <li>{{= name }}</li> {{ }); }}
+      </div>
+    </div>
+</div>
 </script>
 
 <div id="tweet_container"></div>
