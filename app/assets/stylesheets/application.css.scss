@@ -15,3 +15,66 @@
 
  @import "bourbon";
  @import "neat";
+
+ body {
+   font-family: $helvetica;
+ }
+
+ button {
+   border-color: #0ad;
+   color: #0ad;
+   background: #fff;
+   text-align: center;
+   width: 200px;
+   border: 2px solid #0ad;
+   border-radius:4px;
+   margin:5px;
+   padding:5px;
+   -webkit-font-smoothing:antialised;
+   font-size:14px;
+ }
+
+ #header_buttons {
+   float:right;
+ }
+
+ .feed_tweet {
+    width: 60%;
+    display: table;
+    font-size:13px;
+    color:#CCC;
+    margin-bottom:20px;
+    padding: 10px;
+
+    .left {
+      @include span-columns(1);
+    }
+
+    .right {
+      @include span-columns(11);
+    }
+
+    .datetime { font-size: 8px; display:inline; color:#CCC }
+    .username { font-size: 14px; color: #0084B4; font-weight:light; }
+    .text { font-size: 20px; color:#000; font-weight: bold; }
+    .noun_phrase { margin-top: 5px; margin-bottom:10px; }
+    .noun_phrase ul { padding:0px; padding-top: 5px; margin:0; }
+    .noun_phrase li {
+      @include border-top-radius(5px);
+      @include border-bottom-radius(5px);
+
+      font-size: 9px;
+      text-transform:uppercase;
+      padding: 5px;
+      color: #FFF;
+      background-color:#0084B4;
+      opacity:0.4;
+      display:inline;
+    }
+ }
+
+ img {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 50%;
+}

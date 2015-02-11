@@ -1,9 +1,7 @@
-<script type="text/template" id="tweet_template_old">
-  <label>Search</label>
-  <input type="text" id="search_input" />
-  <input type="button" id="search_button" value="Search" />
-  <button type="button" id="load_button">Load</button>
-</script>
+
+<div id="header_buttons">
+  <button>Reload feed</button>
+</div>
 
 <script type="text/template" id="tweet_template">
   <div class="feed_tweet">
@@ -11,11 +9,15 @@
       <img src='{{= model.get('twitter_user').profile_image_url }}' alt='image' %/>
     </div>
     <div class="right">
-      <div class="datetime">{{=model.get('created_at')}}</div>
-      <div class="username"><{{=model.get('twitter_user').user_screen_name}}</div>
+      <div class="username">
+        @{{=model.get('twitter_user').user_screen_name}}
+        <div class="datetime">{{=model.get('created_at')}}</div>
+      </div>
       <div class="text">{{= model.get('text') }}</div>
       <div class="noun_phrase">
+        <ul>
         {{ _.each(model.get('noun_phrases').split('|'), function(name) { }} <li>{{= name }}</li> {{ }); }}
+      </ul>
       </div>
     </div>
 </div>
