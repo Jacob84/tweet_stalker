@@ -1,4 +1,4 @@
 $(function() {
-  var feed_view = new FeedView({ el: $("#tweet_container") });
+  var feed_view = new FeedView({ el: $("#feed") });
   feed_view.loadTweets();
 });
