@@ -1,5 +1,6 @@
-require 'twitter_list_manager'
+
 require 'twitter_list_analyzer'
+require 'twitter_list_timeline_downloader'
 
 class WelcomeController < ApplicationController
 
