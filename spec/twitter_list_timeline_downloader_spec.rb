@@ -1,4 +1,4 @@
-require 'twitter_list_manager'
+require 'twitter_list_timeline_downloader'
 require 'ostruct'
 
 LIST_ID = 1
@@ -8,12 +8,11 @@ TWEET_TEXT = 'text'
 TWEET_FAVORITE_COUNT = 10
 TWEET_RETWEET_COUNT = 20
 
-RSpec.describe TwitterListManager do
+RSpec.describe TwitterListTimelineDownloader do
 
   before do
     @client = double()
-    @wrapper = TwitterListManager.new(@client)
-
+    @wrapper = TwitterListTimelineDownloader.new(@client)
     allow(@client).to receive(:list_timeline).and_return([get_test_tweet])
   end
 

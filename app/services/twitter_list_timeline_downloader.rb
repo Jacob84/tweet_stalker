@@ -1,4 +1,4 @@
-class TwitterListManager
+class TwitterListTimelineDownloader
 
   def initialize(client = nil)
     @client = client

@@ -1,3 +1,8 @@
+<script type="text/template" id="popup_template">
+  <div class="popup-contents"><h1>Tracked lists</h1></div>
+  <div class="popup-background"></div>
+</script>
+
 <script type="text/template" id="tweet_template">
   <div class="feed_tweet">
     <div class="left">
@@ -18,14 +23,18 @@
 </div>
 </script>
 
-<div id="header">
+<div id="main_container">
+  <div id="header">
 
-</div>
-
-<div id="feed">
-  <div id="header_buttons">
-    <button id="reload_feed">Reload feed</button>
   </div>
-  <!-- main feed container -->
-  <div id="tweets"></div>
+
+  <div id="popup"></div>
+
+  <div id="feed">
+    <div id="header_buttons">
+      <button id="reload_feed">Reload feed</button>
+    </div>
+    <!-- main feed container -->
+    <div id="tweets"></div>
+  </div>
 </div>
