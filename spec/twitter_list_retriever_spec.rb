@@ -1,4 +1,4 @@
-require 'twitter_list_retriever'
+require 'rails_helper'
 require 'ostruct'
 
 LIST_ID = 1

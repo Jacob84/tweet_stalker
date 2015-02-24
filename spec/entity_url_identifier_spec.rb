@@ -1,4 +1,4 @@
-require 'entity_url_identifier'
+require 'rails_helper'
 require 'ostruct'
 
 RSpec.describe EntityUrlIdentifier, "#urls" do

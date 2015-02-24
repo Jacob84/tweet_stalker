@@ -1,4 +1,4 @@
-require 'twitter_list_analyzer'
+require 'rails_helper'
 require 'ostruct'
 
 RSpec.describe TwitterListAnalyzer do
