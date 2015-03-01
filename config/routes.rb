@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'tracked_lists' => 'tracked_lists#index'
+  post 'tracked_lists' => 'tracked_lists#post'
+
   get 'list_timeline' => 'list_timeline#timeline'
   post 'list_update' => 'list_timeline#update'
 

@@ -1,16 +1,29 @@
 <script type="text/template" id="popup_template">
   <div class="popup_container">
-    <div class="popup_title"><h1>Tracked lists</h1></div>
+    <div class='closing_button'>X</div>
+    <div class="popup_title"><h1>Popup</h1></div>
     <div class="popup_contents"></div>
-    <div class="buttons_container"><button>Save</button></div>
+    <div class="buttons_container"><button id='popup_save_button'>Save</button></div>
   </div>
   <div class="popup_background"></div>
 </script>
 
-<script type="text/template" id="tracked_lists_template">
+<script type="text/template" id='tracked_lists_template'>
+  <select class="styled_select">
+    {{ _.each(model, function(model) { }}
+      <option>{{=model.get('name')}}</option>
+    {{ }); }}
+  </select>
+  <button id="add_new_tracked_list">+</button>
+</script>
+
+<script type="text/template" id="add_tracked_lists_template">
   <div class='list'>
     <div class='list_name'>
-      <input type="checkbox" name="animal" value="Cat" /> {{= model.get('name')}}
+      <input type="checkbox"
+        class="tracked_list_checkbox"
+        name="{{=model.get('twitter_list_id')}}"
+        value="{{=model.get('twitter_list_id')}}" /> {{= model.get('name')}}
     </div>
     <div class='list_details'>
       Subscribers: {{= model.get('subscriber_count') }} | {{= model.get('member_count') }}
@@ -40,10 +53,13 @@
 </script>
 
 <div id="main_container">
+  <div id="popup_placeholder"></div>
   <div id="header">
 
   </div>
+  <div id="sub_header">
 
+  </div>
   <div id="feed">
     <div id="header_buttons">
       <button id="reload_feed">Reload feed</button>
