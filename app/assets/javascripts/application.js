@@ -19,6 +19,7 @@
 //= require ./models/tweet
 //= require ./models/feed
 
+//= require ./views/popup_view
 //= require_tree ./views/
 
 //= require_tree .
