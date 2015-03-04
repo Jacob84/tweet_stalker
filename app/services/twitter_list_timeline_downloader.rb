@@ -1,8 +1,12 @@
 require 'twitter_api_wrapper'
 
 class TwitterListTimelineDownloader < TwitterApiWrapper
-  def sync_list_timeline(list_id)
-    last_tweet = Tweet.all(:order => :created_at.desc).first
+  def sync_list_timeline(user_id, list_id)
+    last_tweet = Tweet
+      .where(:user_id => user_id)
+      .where(:twitter_list_id => list_id)
+      .sort(:created_at.desc)
+      .first
 
     since_id = last_tweet != nil ? last_tweet.twitter_tweet_id : nil
     since_id_hash = since_id != nil ? { :since_id => since_id } : {}
@@ -20,6 +24,7 @@ class TwitterListTimelineDownloader < TwitterApiWrapper
       profile_image_url_https = "#{t.user.profile_image_url_https.scheme}://#{t.user.profile_image_url_https.host}#{t.user.profile_image_url_https.path}"
 
       persisted_tweet = Tweet.create(
+          :user_id => user_id,
           :twitter_list_id => list_id,
           :twitter_tweet_id => t.id,
           :created_at => t.created_at,

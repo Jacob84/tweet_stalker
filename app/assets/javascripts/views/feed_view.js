@@ -3,14 +3,19 @@ FeedView = Backbone.View.extend({
   initialize: function(){
     this._feed = [];
     this.render();
+
+    var self = this;
+    App.EventsHub.on("loadList", function(msg) {
+      self.loadTweets(msg);
+    });
   },
   events: {
       "click #reload_feed": "reloadFeed"
   },
   reloadFeed: function(event) {
     var that = this;
-
-    this.changeOpacity('0.3');
+    //
+    // this.changeOpacity('0.3');
     $.post("/list_update/", function( data ) {
       that.loadTweets();
     });
@@ -25,6 +30,7 @@ FeedView = Backbone.View.extend({
     this._feed = new Feed;
 
     this._feed.fetch({
+      data: { id: event },
       success: function(collection){
         view_ref._tweetViews = [];
 

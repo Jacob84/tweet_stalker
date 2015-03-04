@@ -10,9 +10,9 @@ AddTrackedListsPopupView = PopupView.extend({
     });
 
     this.template = _.template($('#add_tracked_lists_template').html());
-    this.context = { title: 'Child Title' };
-    // this.render();
+    this.loading_template = _.template($('#ajax_loading_template').html());
 
+    this.context = { title: 'Child Title' };
     this.save_function = this.submit_to_server;
   },
   events: function(){
@@ -51,8 +51,16 @@ AddTrackedListsPopupView = PopupView.extend({
   render_content: function() {
     var self = this;
     self.contents_el.html("");
-    _(this.model.models).each(function(model) {
-      self.contents_el.append(self.template({model: model}));
-    });
+
+    // if (!this.model) {
+    self.contents_el.append(self.loading_template());
+
+    // }
+    // else
+    // {
+    //   _(this.model.models).each(function(model) {
+    //     self.contents_el.append(self.template({model: model}));
+    //   });
+    // }
   }
 });

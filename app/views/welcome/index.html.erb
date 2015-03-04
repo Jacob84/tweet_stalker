@@ -1,3 +1,10 @@
+
+<script type='text/template' id="ajax_loading_template">
+  <div class='loading'>
+    <%=image_tag "loading.gif"%>
+  </div>
+</script>
+
 <script type="text/template" id="popup_template">
   <div class="popup_container">
     <div class='closing_button'>X</div>
@@ -9,9 +16,9 @@
 </script>
 
 <script type="text/template" id='tracked_lists_template'>
-  <select class="styled_select">
+  <select class="styled_select" id="tracked_lists_dropdown">
     {{ _.each(model, function(model) { }}
-      <option>{{=model.get('name')}}</option>
+      <option value="{{=model.get('twitter_list_id')}}">{{=model.get('name')}}</option>
     {{ }); }}
   </select>
   <button id="add_new_tracked_list">+</button>

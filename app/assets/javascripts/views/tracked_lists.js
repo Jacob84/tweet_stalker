@@ -5,10 +5,15 @@ TrackedLists = Backbone.View.extend({
     this.template = _.template($('#tracked_lists_template').html());
   },
   events: {
-    'click #add_new_tracked_list' : 'add_tracked_list'
+    'click #add_new_tracked_list' : 'add_tracked_list',
+    "change #tracked_lists_dropdown" : 'new_list_selected'
   },
   add_tracked_list: function() {
     App.EventsHub.trigger("newTrackedList");
+  },
+  new_list_selected: function(ev) {
+    var list_id = $(ev.target).find("option:selected").val()
+    App.EventsHub.trigger("loadList", list_id);
   },
   load_lists: function() {
     var self = this;
