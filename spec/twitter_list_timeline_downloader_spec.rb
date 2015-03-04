@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'ostruct'
 
 LIST_ID = 1
+USER_ID = 1
 TWEET_ID = 1000
 TWEET_CREATED_AT = 'date'
 TWEET_TEXT = 'text'
@@ -16,14 +17,18 @@ RSpec.describe TwitterListTimelineDownloader do
     allow(@client).to receive(:list_timeline).and_return([get_test_tweet])
   end
 
-  context 'when no previous tweets' do
+  describe 'when no previous tweets' do
+    before do
+      @wrapper.sync_list_timeline(USER_ID, LIST_ID)
+    end
+
     it 'should call without since_id' do
-      @wrapper.sync_list_timeline(LIST_ID)
       expect(@client).to have_received(:list_timeline).with(LIST_ID, {})
     end
 
     it 'should map fields correctly' do
       tweet = Tweet.all.first
+      expect(tweet.user_id).to eq USER_ID
       expect(tweet.twitter_list_id).to eq LIST_ID
       expect(tweet.twitter_tweet_id).to eq TWEET_ID
       expect(tweet.text).to eq TWEET_TEXT
@@ -32,27 +37,29 @@ RSpec.describe TwitterListTimelineDownloader do
     end
   end
 
-  context 'when previous tweets' do
+  describe 'when previous tweets' do
     before do
-      Tweet.create({:twitter_tweet_id => 123132})
+      Tweet.create({
+        :user_id => USER_ID,
+        :twitter_list_id => LIST_ID,
+        :twitter_tweet_id => TWEET_ID})
+
+      @wrapper.sync_list_timeline(USER_ID, LIST_ID)
     end
 
     it 'should call with since_id' do
-      @wrapper.sync_list_timeline(LIST_ID)
-      expect(@client).to have_received(:list_timeline).with(LIST_ID, {:since_id => 123132})
+      expect(@client).to have_received(:list_timeline).with(USER_ID, {:since_id => TWEET_ID})
     end
 
     it 'should map fields correctly' do
       tweet = Tweet.all.first
+      expect(tweet.user_id).to eq USER_ID
       expect(tweet.twitter_list_id).to eq LIST_ID
       expect(tweet.twitter_tweet_id).to eq TWEET_ID
-      expect(tweet.text).to eq TWEET_TEXT
-      expect(tweet.favorite_count).to eq TWEET_FAVORITE_COUNT
-      expect(tweet.retweet_count).to eq TWEET_RETWEET_COUNT
     end
   end
 
-  after :all do
+  after :each do
     Tweet.destroy_all
   end
 
