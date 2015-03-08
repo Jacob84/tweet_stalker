@@ -43,6 +43,7 @@ AddTrackedListsPopupView = PopupView.extend({
     this._lists = new Lists;
 
     this._lists.fetch({
+      data: { show_all: true },
       success: function(collection){
         self.model = collection;
         self.render_content();
