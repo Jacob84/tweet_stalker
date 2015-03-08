@@ -1,7 +1,7 @@
 class TrackedListsController < ApplicationController
   def index
     service = TrackedListsService.new
-    lists = service.get_tracked_lists(1)
+    lists = service.get_lists(1)
     render json: lists
   end
 
