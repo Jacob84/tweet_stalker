@@ -7,8 +7,6 @@ class TrackedListsService
     twitter_lists = @list_retriever.lists
     tracked_lists = TrackedList.find_all_by_user_id(user_id)
 
-puts twitter_lists.inspect
-
     twitter_lists.each do |list|
       current_tracked_list = tracked_lists.find { |x|
         x.twitter_list_id == list.list_id

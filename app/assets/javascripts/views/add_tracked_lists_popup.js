@@ -6,6 +6,7 @@ AddTrackedListsPopupView = PopupView.extend({
 
     App.EventsHub.on("newTrackedList", function(msg) {
       self.render();
+      self.render_content();
       self.load_lists();
     });
 
@@ -15,7 +16,7 @@ AddTrackedListsPopupView = PopupView.extend({
     this.context = { title: 'Child Title' };
     this.save_function = this.submit_to_server;
   },
-  events: function(){
+  events: function() {
     return _.extend({},PopupView.prototype.events,{
       'click .tracked_list_checkbox': 'update_collection'
     });
@@ -52,15 +53,13 @@ AddTrackedListsPopupView = PopupView.extend({
     var self = this;
     self.contents_el.html("");
 
-    // if (!this.model) {
-    self.contents_el.append(self.loading_template());
-
-    // }
-    // else
-    // {
-    //   _(this.model.models).each(function(model) {
-    //     self.contents_el.append(self.template({model: model}));
-    //   });
-    // }
+    if (!this.model) {
+      self.contents_el.append(self.loading_template());
+    }
+    else {
+      _(this.model.models).each(function(model) {
+        self.contents_el.append(self.template({model: model}));
+      });
+    }
   }
 });
