@@ -3,11 +3,6 @@ FeedView = Backbone.View.extend({
   initialize: function(){
     this._feed = [];
     this.render();
-
-    var self = this;
-    App.EventsHub.on("loadList", function(msg) {
-      self.loadTweets(msg);
-    });
   },
   events: {
       "click #reload_feed": "reloadFeed"

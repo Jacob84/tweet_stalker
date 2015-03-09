@@ -32,11 +32,16 @@ _.templateSettings = {
 var Router = Backbone.Router.extend({
   routes: {
     "": "init",
+    "load_list_timeline/:list_id": "load_list_timeline",
     "add_tracked_list": "add_tracked_list"
   },
   init: function() {
     var tracked_lists = new TrackedLists();
     tracked_lists.load_lists();
+  },
+  load_list_timeline: function(list_id) {
+    var feed_view = new FeedView({ el: $("#feed") });
+    feed_view.loadTweets(list_id);
   },
   add_tracked_list: function() {
     var popup_view = new AddTrackedListsPopupView();
