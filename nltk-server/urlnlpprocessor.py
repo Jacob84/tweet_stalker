@@ -60,33 +60,47 @@ class UrlNlpProcessor:
         pass
 
     def process(self, url):
-        start_method = time.time()
+        try:
+            start_method = time.time()
 
-        content = HttpClient().get_html(url)
-        relevant_text = RelevantContentRetriever().get_relevant_text(content.text)
+            content = HttpClient().get_html(url)
+            relevant_text = RelevantContentRetriever().get_relevant_text(content.text)
 
-        soup = BeautifulSoup(content.text)
+            soup = BeautifulSoup(content.text)
 
-        [s.extract() for s in soup('script')]
+            [s.extract() for s in soup('script')]
 
-        headings1 = [s.string for s in soup.find_all('h1') if s.string is not None]
-        headings2 = [s.string for s in soup.find_all('h2') if s.string is not None]
-        headings3 = [s.string for s in soup.find_all('h3') if s.string is not None]
+            headings1 = [s.string for s in soup.find_all('h1') if s.string is not None]
+            headings2 = [s.string for s in soup.find_all('h2') if s.string is not None]
+            headings3 = [s.string for s in soup.find_all('h3') if s.string is not None]
 
-        lowered_headings = " ".join([h.lower() for h in headings1])
+            lowered_headings = " ".join([h.lower() for h in headings1])
 
-        noun_phrases_importance = NlpProcessor().process(relevant_text.text)
+            noun_phrases_importance = NlpProcessor().process(relevant_text.text)
 
-        noun_phrases_importance = list([(x, y + 5) if x.lower() in soup.title.string.lower() else (x,y) for (x,y) in noun_phrases_importance])
-        noun_phrases_importance = list([(x, y + 5) if x.lower() in lowered_headings else (x,y) for (x,y) in noun_phrases_importance])
+            noun_phrases_importance = list([(x, y + 5) if x.lower() in soup.title.string.lower() else (x,y) for (x,y) in noun_phrases_importance])
+            noun_phrases_importance = list([(x, y + 5) if x.lower() in lowered_headings else (x,y) for (x,y) in noun_phrases_importance])
 
-        end_method = time.time()
+            end_method = time.time()
 
-        result = UrlNlpProcessorResult(url)
-        result.set_title(soup.title.string if soup.title is not None else "no title")
-        result.set_headings(headings1, headings2, headings3)
-        result.set_text(relevant_text.text)
-        result.set_noun_phrases(noun_phrases_importance)
-        result.set_times(end_method-start_method, content.time, relevant_text.time)
+            result = UrlNlpProcessorResult(url)
+            result.set_title(soup.title.string if soup.title is not None else "no title")
+            result.set_headings(headings1, headings2, headings3)
+            result.set_text(relevant_text.text)
+            result.set_noun_phrases(noun_phrases_importance)
+            result.set_times(end_method-start_method, content.time, relevant_text.time)
 
-        return result
+            return result
+        except Exception as e:
+            print (e)
+            return self.__get_null_object(url)
+
+    def __get_null_object(self, url):
+        null_object = UrlNlpProcessorResult(url)
+        null_object.set_title('')
+        null_object.set_headings([], [], [])
+        null_object.set_text('')
+        null_object.set_noun_phrases([])
+        null_object.set_times(0, 0, 0)
+
+        return null_object
