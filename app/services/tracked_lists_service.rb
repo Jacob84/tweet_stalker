@@ -26,7 +26,7 @@ class TrackedListsService
       end
     end
 
-    return TrackedList.find_all_by_user_id(user_id)
+    TrackedList.find_all_by_user_id(user_id)
   end
 
   def add_lists(user_id, list_identifiers)
