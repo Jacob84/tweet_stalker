@@ -51,3 +51,5 @@ gem 'httparty'
 gem 'bourbon'
 
 gem 'neat'
+
+gem 'rubocop'

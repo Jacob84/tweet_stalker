@@ -1,5 +1,5 @@
-require "rubygems"
-require "json"
+require 'rubygems'
+require 'json'
 
 class TwitterListAnalyzer
 
