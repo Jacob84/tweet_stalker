@@ -2,19 +2,13 @@ AddTrackedListsPopupView = PopupView.extend({
   initialize: function () {
     AddTrackedListsPopupView.__super__.initialize.call(this);
 
-    var self = this;
-
-    App.EventsHub.on("newTrackedList", function(msg) {
-      self.render();
-      self.render_content();
-      self.load_lists();
-    });
-
     this.template = _.template($('#add_tracked_lists_template').html());
     this.loading_template = _.template($('#ajax_loading_template').html());
 
     this.context = { title: 'Child Title' };
     this.save_function = this.submit_to_server;
+
+    this.render();
   },
   events: function() {
     return _.extend({},PopupView.prototype.events,{
@@ -40,7 +34,7 @@ AddTrackedListsPopupView = PopupView.extend({
   load_lists: function () {
     var self = this;
 
-    this._lists = new Lists;
+    this._lists = new Lists();
 
     this._lists.fetch({
       data: { show_all: true },

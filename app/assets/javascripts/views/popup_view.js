@@ -1,9 +1,3 @@
-
-var App = {};
-App.EventsHub = {};
-_.extend(App.EventsHub, Backbone.Events);
-
-
 PopupView = Backbone.View.extend({
   el: '#popup_placeholder',
 
@@ -18,6 +12,7 @@ PopupView = Backbone.View.extend({
   },
   close: function() {
     this.remove();
+    App.Router.navigate('');
   },
   save: function() {
     if (typeof(this.save_function) == "function") {
@@ -27,6 +22,7 @@ PopupView = Backbone.View.extend({
   render: function() {
     $(this.el).append(_.template(this.base_template, this.context));
     this.contents_el = $(this.el).find('.popup_contents');
+    this.render_content();
   },
   render_content: function(content) {
     if (content)

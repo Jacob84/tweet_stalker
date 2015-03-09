@@ -28,3 +28,27 @@ _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/g,
     evaluate: /\{\{(.+?)\}\}/g
 };
+
+var Router = Backbone.Router.extend({
+  routes: {
+    "": "init",
+    "add_tracked_list": "add_tracked_list"
+  },
+  init: function() {
+    var tracked_lists = new TrackedLists();
+    tracked_lists.load_lists();
+  },
+  add_tracked_list: function() {
+    var popup_view = new AddTrackedListsPopupView();
+    popup_view.load_lists();
+  }
+});
+
+var App = {};
+
+$(function() {
+  App.Router = new Router();
+  App.EventsHub = {};
+  _.extend(App.EventsHub, Backbone.Events);
+  Backbone.history.start();
+});
