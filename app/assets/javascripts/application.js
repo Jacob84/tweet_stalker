@@ -40,8 +40,7 @@ var Router = Backbone.Router.extend({
     tracked_lists.load_lists();
   },
   load_list_timeline: function(list_id) {
-    var feed_view = new FeedView({ el: $("#feed") });
-    feed_view.loadTweets(list_id);
+    App.TimelineView.loadTweets(list_id);
   },
   add_tracked_list: function() {
     var popup_view = new AddTrackedListsPopupView();
@@ -52,6 +51,7 @@ var Router = Backbone.Router.extend({
 var App = {};
 
 $(function() {
+  App.TimelineView = new ListTimelineView({ el: $("#feed") });
   App.Router = new Router();
   App.EventsHub = {};
   _.extend(App.EventsHub, Backbone.Events);

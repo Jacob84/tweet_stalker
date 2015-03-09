@@ -1,5 +1,5 @@
 
-FeedView = Backbone.View.extend({
+ListTimelineView = Backbone.View.extend({
   initialize: function(){
     this._feed = [];
     this.render();
