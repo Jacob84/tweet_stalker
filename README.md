@@ -1,7 +1,7 @@
 # tweet-stalker
 Tweet stalker is a test application that features topic recognition over Twitter lists.
 
-![alt tag](https://raw.github.com/jacob84/tweet-stalker/master/media/example.png)
+![alt tag](https://raw.github.com/jacob84/tweet-stalker/master/media/example2.png)
 
 ## System areas
  - **Ruby application that holds also a BackboneJS application.**
