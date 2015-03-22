@@ -55,6 +55,18 @@ $(function() {
   App.Router = new Router();
   App.EventsHub = {};
   App.TrackedLists = new Lists();
+  App.CurrentListId = null;
+  App.SetCurrentListRoute = function() {
+    if (!App.CurrentListId) {
+      if ((App.TrackedLists.models) && (App.TrackedLists.models.length > 0))
+        App.CurrentListId = App.TrackedLists.models[0].get('twitter_list_id');
+    }
+
+    if (App.CurrentListId)
+      App.Router.navigate('load_list_timeline/' + App.CurrentListId, {trigger: true});
+    else
+      App.Router.navigate('', {trigger: true});
+  };
 
   App.TrackedLists.fetch({
     success: function(collection){
@@ -62,10 +74,7 @@ $(function() {
 
       Backbone.history.start();
 
-      if ((App.TrackedLists.models) && (App.TrackedLists.models.length > 0))
-        App.Router.navigate('load_list_timeline/' + App.TrackedLists.models[0].get('twitter_list_id'), {trigger: true});
-      else
-        App.Router.navigate('', {trigger: true});
+      App.SetCurrentListRoute();
     }
   });
 });

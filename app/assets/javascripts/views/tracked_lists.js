@@ -12,6 +12,7 @@ TrackedLists = Backbone.View.extend({
   },
   new_list_selected: function(ev) {
     var list_id = $(ev.target).find("option:selected").val();
+    App.CurrentListId = list_id;
     App.Router.navigate('load_list_timeline/' + list_id, {trigger: true});
   },
   load_lists: function() {

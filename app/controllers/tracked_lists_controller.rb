@@ -1,3 +1,4 @@
+# TrackedListsController
 class TrackedListsController < ApplicationController
   def index
     show_all = params[:show_all] == 'true'

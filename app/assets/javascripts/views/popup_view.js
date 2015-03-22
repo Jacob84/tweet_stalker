@@ -10,7 +10,7 @@ PopupView = Backbone.View.extend({
   },
   close: function() {
     this.remove();
-    App.Router.navigate('');
+    App.SetCurrentListRoute();
   },
   save: function() {
     if (typeof(this.save_function) == "function") {
