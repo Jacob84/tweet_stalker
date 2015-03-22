@@ -1,6 +1,4 @@
 PopupView = Backbone.View.extend({
-  el: '#popup_placeholder',
-
   initialize: function() {
     this.base_template = $('#popup_template').html();
     this.context = { title: 'Some title' };
@@ -27,5 +25,11 @@ PopupView = Backbone.View.extend({
   render_content: function(content) {
     if (content)
       this.contents_el.html(content);
+  },
+  remove: function() {
+    this.undelegateEvents();
+    this.$el.empty();
+    this.stopListening();
+    return this;
   }
 });

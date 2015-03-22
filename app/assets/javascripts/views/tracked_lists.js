@@ -15,16 +15,8 @@ TrackedLists = Backbone.View.extend({
     App.Router.navigate('load_list_timeline/' + list_id, {trigger: true});
   },
   load_lists: function() {
-    var self = this;
-
-    this._lists = new Lists();
-
-    this._lists.fetch({
-      success: function(collection){
-        self.model = collection;
-        self.render();
-      }
-    });
+    this.model = App.TrackedLists;
+    this.render();
   },
   render: function() {
     $(this.el).html("");

@@ -28,6 +28,7 @@
   <div class='list'>
     <div class='list_name'>
       <input type="checkbox"
+        {{= model.get('tracked') === true ? 'checked=checked' : ''  }}
         class="tracked_list_checkbox"
         name="{{=model.get('twitter_list_id')}}"
         value="{{=model.get('twitter_list_id')}}" /> {{= model.get('name')}}

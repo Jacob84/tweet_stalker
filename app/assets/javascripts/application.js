@@ -43,7 +43,7 @@ var Router = Backbone.Router.extend({
     App.TimelineView.loadTweets(list_id);
   },
   add_tracked_list: function() {
-    var popup_view = new AddTrackedListsPopupView();
+    var popup_view = new AddTrackedListsPopupView({el: '#popup_placeholder'});
     popup_view.load_lists();
   }
 });
@@ -54,6 +54,18 @@ $(function() {
   App.TimelineView = new ListTimelineView({ el: $("#feed") });
   App.Router = new Router();
   App.EventsHub = {};
-  _.extend(App.EventsHub, Backbone.Events);
-  Backbone.history.start();
+  App.TrackedLists = new Lists();
+
+  App.TrackedLists.fetch({
+    success: function(collection){
+      _.extend(App.EventsHub, Backbone.Events);
+
+      Backbone.history.start();
+
+      if ((App.TrackedLists.models) && (App.TrackedLists.models.length > 0))
+        App.Router.navigate('load_list_timeline/' + App.TrackedLists.models[0].get('twitter_list_id'), {trigger: true});
+      else
+        App.Router.navigate('', {trigger: true});
+    }
+  });
 });

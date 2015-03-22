@@ -6,7 +6,7 @@ class ListTimelineController < ApplicationController
 
   def update
     timeline = ListTimelineService.new
-    timeline.update_timeline(1, 189546423)
-    render :nothing => true, :status => 200, :content_type => 'text/html'
+    timeline.update_timeline(1, 198_942_578)
+    render nothing: true, status: 200, content_type: 'text/html'
   end
 end
