@@ -1,9 +1,11 @@
+# EntityUrlEnumeration
 module EntityUrlEnumeration
   TWITTER = 1
   YOUTUBE = 2
   OTHER = 9999
 end
 
+# EntityUrlIdentifier
 class EntityUrlIdentifier
 
   def should_be_analyzed?(entity_url)
