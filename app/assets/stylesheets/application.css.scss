@@ -63,10 +63,6 @@
    background-color:#CCC;
  }
 
- #header_buttons {
-   float:right;
- }
-
  .feed_tweet {
     width: 60%;
     display: table;
@@ -190,10 +186,18 @@
   font-size:22px;
 }
 
-#add_new_tracked_list {
+.action_button {
   width: 35px;
   font-weight: bolder;
   color: #E5FAEA;
   background-color: #000;
   border-color: #E5FAEA;
+}
+
+#add_new_tracked_list {
+  @extend .action_button;
+}
+
+#download_feed {
+  @extend .action_button;
 }

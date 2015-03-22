@@ -5,15 +5,6 @@ ListTimelineView = Backbone.View.extend({
     this.render();
   },
   events: {
-      "click #reload_feed": "reloadFeed"
-  },
-  reloadFeed: function(event) {
-    var that = this;
-    //
-    // this.changeOpacity('0.3');
-    $.post("/list_update/", function( data ) {
-      that.loadTweets();
-    });
   },
   changeOpacity: function(value) {
     jQuery('#reload_feed').css('opacity', value);
@@ -22,7 +13,7 @@ ListTimelineView = Backbone.View.extend({
   loadTweets: function(event) {
     var view_ref = this;
 
-    this._feed = new Feed;
+    this._feed = new Feed();
 
     this._feed.fetch({
       data: { id: event },
@@ -35,9 +26,7 @@ ListTimelineView = Backbone.View.extend({
           }));
         });
 
-        $( "#reload_feed" ).fadeTo( "slow" , 1.0, function() {
-          view_ref.render();
-        });
+        view_ref.render();
       }
     });
 
