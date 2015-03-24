@@ -16,5 +16,4 @@ class Tweet
   key :retweet_count, Integer
   key :noun_phrases, String
   key :analyzed, Boolean
-
 end

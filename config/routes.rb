@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'list_timeline' => 'list_timeline#timeline'
   post 'list_update' => 'list_timeline#update'
 
+  get '/auth/:provider/callback', to: 'sessions#create'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
