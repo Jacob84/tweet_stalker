@@ -1,5 +1,5 @@
 # SessionsController
-class SessionsController < ApplicationController
+class SessionsController < AuthenticatedApplicationController
   def create
     nickname = auth_hash[:info][:nickname]
 
@@ -9,9 +9,13 @@ class SessionsController < ApplicationController
 
     log_in user_from_db
 
-    # redirect_to user_from_db
+    redirect_to url_for(controller: 'single_page_application', action: 'index')
+  end
 
-    render nothing: true, status: 200, content_type: 'text/html'
+  def destroy
+    logout
+
+    redirect_to '/'
   end
 
   protected
@@ -24,11 +28,15 @@ class SessionsController < ApplicationController
       image:        auth_hash[:info][:image],
       description:  auth_hash[:info][:description],
       application_user_credentials: [
-        ApplicationUserCredential.new(
-          provider: 'twitter',
-          token: auth_hash[:credentials][:token],
-          secret: auth_hash[:credentials][:secret])
+        create_new_user_credential(auth_hash)
       ])
+  end
+
+  def create_new_user_credential
+    ApplicationUserCredential.new(
+      provider: 'twitter',
+      token: auth_hash[:credentials][:token],
+      secret: auth_hash[:credentials][:secret])
   end
 
   def auth_hash

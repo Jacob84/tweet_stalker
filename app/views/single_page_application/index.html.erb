@@ -64,7 +64,15 @@
 <div id="main_container">
   <div id="popup_placeholder"></div>
   <div id="header">
-
+    <div style='float:right; padding: 5px;'>
+      <div style='float:left; padding-right: 10px;'>
+        <div style='color:white; font-size: 14px; font-weight: bold'><%= current_user.nickname %></div>
+        <div style='font-size:11px; color: white;'><a href='/auth/logout'>Click here to logout</a></div>
+      </div>
+      <div style='float:right'>
+        <img style='width: 25px; vertical-align: middle' src='<%= current_user.image %>' alt='user' />
+      </div>
+    </div>
   </div>
   <div id="sub_header">
 

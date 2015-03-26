@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root 'landing#index'
+
+  get 'spa' => 'single_page_application#index'
 
   get 'tracked_lists' => 'tracked_lists#index'
   post 'tracked_lists' => 'tracked_lists#post'
@@ -12,6 +14,7 @@ Rails.application.routes.draw do
   post 'list_update' => 'list_timeline#update'
 
   get '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/logout', to: 'sessions#destroy'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
