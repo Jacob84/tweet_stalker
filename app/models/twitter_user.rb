@@ -7,5 +7,4 @@ class TwitterUser
   key :user_screen_name, String
   key :profile_image_url, String
   key :profile_image_url_https, String
-
 end

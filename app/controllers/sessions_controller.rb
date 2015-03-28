@@ -28,7 +28,7 @@ class SessionsController < AuthenticatedApplicationController
       image:        auth_hash[:info][:image],
       description:  auth_hash[:info][:description],
       application_user_credentials: [
-        create_new_user_credential(auth_hash)
+        create_new_user_credential
       ])
   end
 

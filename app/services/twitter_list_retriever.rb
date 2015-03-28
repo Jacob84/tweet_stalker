@@ -6,19 +6,18 @@ class TwitterListRetriever < TwitterApiWrapper
     super(client)
   end
 
-  def lists
+  def lists(user)
     result = []
-    lists = @client.lists()
+    lists = get_client(user).lists()
 
     lists.each do |list|
-      result << TwitterApiList.new({
-        :list_id => list.id,
-        :name => list.name,
-        :uri => list.uri,
-        :subscriber_count => list.subscriber_count,
-        :member_count => list.member_count,
-        :mode => list.mode
-      })
+      result << TwitterApiList.new(
+        list_id: list.id,
+        name: list.name,
+        uri: list.uri,
+        subscriber_count: list.subscriber_count,
+        member_count: list.member_count,
+        mode: list.mode)
     end
 
     result

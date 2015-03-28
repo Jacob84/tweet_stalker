@@ -3,7 +3,7 @@ class Tweet
 
   one :twitter_user
 
-  key :user_id, Integer
+  key :user_id, ObjectId
   key :twitter_list_id, Integer
   key :twitter_tweet_id, Integer
 
