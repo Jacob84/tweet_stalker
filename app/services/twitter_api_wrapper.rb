@@ -11,9 +11,9 @@ class TwitterApiWrapper
     fail 'Consumer key is missing in configuration' if consumer_key.nil?
     fail 'Consumer secret is missing in configuration' if consumer_secret.nil?
 
-    return unless @client.nil?
+    return @client unless @client.nil?
 
-    create_client consumer_key.value, consumer_secret.value, user
+    @client = create_client consumer_key.value, consumer_secret.value, user
   end
 
   private

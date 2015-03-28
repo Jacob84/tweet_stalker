@@ -8,6 +8,7 @@ class TwitterListRetriever < TwitterApiWrapper
 
   def lists(user)
     result = []
+
     lists = get_client(user).lists()
 
     lists.each do |list|
