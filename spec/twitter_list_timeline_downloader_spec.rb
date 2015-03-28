@@ -10,20 +10,22 @@ TWEET_FAVORITE_COUNT = 10
 TWEET_RETWEET_COUNT = 20
 
 RSpec.describe TwitterListTimelineDownloader do
+  let(:client) { double }
 
-  before do
-    @client = double()
-    @wrapper = TwitterListTimelineDownloader.new(@client)
-    allow(@client).to receive(:list_timeline).and_return([get_test_tweet])
-  end
+  let(:wrapper) {
+    allow(client).to receive(:list_timeline).and_return([test_tweet])
+    TwitterListTimelineDownloader.new(client)
+  }
+
+  let(:user) { ApplicationUser.new(_id: 1) }
 
   describe 'when no previous tweets' do
     before do
-      @wrapper.sync_list_timeline(USER_ID, LIST_ID)
+      wrapper.sync_list_timeline(user, LIST_ID)
     end
 
     it 'should call without since_id' do
-      expect(@client).to have_received(:list_timeline).with(LIST_ID, {})
+      expect(client).to have_received(:list_timeline).with(LIST_ID, {})
     end
 
     it 'should map fields correctly' do
@@ -40,15 +42,15 @@ RSpec.describe TwitterListTimelineDownloader do
   describe 'when previous tweets' do
     before do
       Tweet.create({
-        :user_id => USER_ID,
-        :twitter_list_id => LIST_ID,
-        :twitter_tweet_id => TWEET_ID})
+        user_id: USER_ID,
+        twitter_list_id: LIST_ID,
+        twitter_tweet_id: TWEET_ID })
 
-      @wrapper.sync_list_timeline(USER_ID, LIST_ID)
+      wrapper.sync_list_timeline(user, LIST_ID)
     end
 
     it 'should call with since_id' do
-      expect(@client).to have_received(:list_timeline).with(USER_ID, {:since_id => TWEET_ID})
+      expect(client).to have_received(:list_timeline).with(USER_ID, since_id: TWEET_ID)
     end
 
     it 'should map fields correctly' do
@@ -63,30 +65,29 @@ RSpec.describe TwitterListTimelineDownloader do
     Tweet.destroy_all
   end
 
-  def get_test_tweet
+  def test_tweet
     tweet_hash = {
-      :id => TWEET_ID,
-      :created_at => TWEET_CREATED_AT,
-      :text => TWEET_TEXT,
-      :favorite_count => TWEET_FAVORITE_COUNT,
-      :retweet_count => TWEET_RETWEET_COUNT
+      id: TWEET_ID,
+      created_at: TWEET_CREATED_AT,
+      text: TWEET_TEXT,
+      favorite_count: TWEET_FAVORITE_COUNT,
+      retweet_count: TWEET_RETWEET_COUNT
     }
 
     profile_image = {
-      :scheme => 'http',
-      :host => 'host',
-      :path => 'path'
+      scheme: 'http',
+      host: 'host',
+      path: 'path'
     }
 
     tweet = OpenStruct.new(tweet_hash)
-    tweet.user_mentions = [OpenStruct.new({:screen_name => 'screen_name'})]
-    tweet.urls = [OpenStruct.new({:url => 'url'})]
-    tweet.hashtags = ['hashtag1', 'hashtag2']
+    tweet.user_mentions = [OpenStruct.new(screen_name: 'screen_name')]
+    tweet.urls = [OpenStruct.new(url: 'url')]
+    tweet.hashtags = %w(hashtag1, hashtag2)
     tweet.user = OpenStruct.new
     tweet.user.profile_image_url = OpenStruct.new(profile_image)
     tweet.user.profile_image_url_https = OpenStruct.new(profile_image)
 
-    return tweet
+    tweet
   end
-
 end
