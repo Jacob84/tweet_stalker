@@ -30,8 +30,8 @@ RSpec.describe ListTimelineService do
   describe 'when updating a list' do
     it 'downloads and processes timeline' do
       service.update_timeline(user, 321_92)
-      expect(manager).to have_received(:sync_list_timeline)
-      expect(analyzer).to have_received(:process_pending_tweets)
+      expect(manager).to have_received(:sync_list_timeline).with(user, 321_92)
+      expect(analyzer).to have_received(:process_pending_tweets).with(user)
     end
   end
 

@@ -2,13 +2,16 @@ require 'rubygems'
 require 'json'
 
 class TwitterListAnalyzer
-  def initialize(url_analyzer = EntityUrlIdentifier.new, http_client = HttpClient.new)
+  def initialize(
+    url_analyzer = EntityUrlIdentifier.new,
+    http_client = HttpClient.new)
     @url_analyzer = url_analyzer
     @http = http_client
   end
 
-  def process_pending_tweets
-    pendings = Tweet.where(analyzed: false)
+  def process_pending_tweets(user)
+    pendings = Tweet.where(user_id: user._id)
+                    .where(analyzed: false)
 
     pendings.each do |t|
       process_tweet(t)
@@ -32,7 +35,7 @@ class TwitterListAnalyzer
   end
 
   def save_analyzed_tweet(tweet, noun_phrases)
-    tweet.noun_phrases = noun_phrases.join('|')
+    tweet.noun_phrases = noun_phrases
     tweet.analyzed = true
     tweet.save
   end
@@ -49,10 +52,9 @@ class TwitterListAnalyzer
     noun_phrases = []
 
     json_response['result'].each do |r|
-      noun_phrases << "#{r[0]}:#{r[1]}"
+      noun_phrases << NounPhrase.new(value: r[0], points: r[1].to_i)
     end
 
     noun_phrases
   end
-
 end

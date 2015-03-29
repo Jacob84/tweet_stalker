@@ -1,4 +1,3 @@
-# ListTimelineService
 class ListTimelineService
   def initialize(manager = TwitterListTimelineDownloader.new,
                  analyzer = TwitterListAnalyzer.new)
@@ -16,8 +15,7 @@ class ListTimelineService
   end
 
   def update_timeline(user, twitter_list_id)
-    puts user.inspect
     @manager.sync_list_timeline(user, twitter_list_id)
-    @analyzer.process_pending_tweets
+    @analyzer.process_pending_tweets(user)
   end
 end

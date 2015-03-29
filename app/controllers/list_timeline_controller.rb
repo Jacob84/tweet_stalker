@@ -1,4 +1,3 @@
-# ListTimelineController
 class ListTimelineController < AuthenticatedApplicationController
   def timeline
     presenter = ListTimelineService.new

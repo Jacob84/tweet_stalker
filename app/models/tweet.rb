@@ -2,6 +2,7 @@ class Tweet
   include MongoMapper::Document
 
   one :twitter_user
+  many :noun_phrases
 
   key :user_id, ObjectId
   key :twitter_list_id, Integer
@@ -14,6 +15,5 @@ class Tweet
   key :hashtags, String
   key :favorite_count, Integer
   key :retweet_count, Integer
-  key :noun_phrases, String
   key :analyzed, Boolean
 end

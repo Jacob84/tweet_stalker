@@ -35,7 +35,6 @@ class TwitterListTimelineDownloader < TwitterApiWrapper
         hashtags: hashtags,
         favorite_count: t.favorite_count,
         retweet_count: t.retweet_count,
-        noun_phrases: '',
         analyzed: false,
         twitter_user: TwitterUser.new(
           twitter_user_id: t.user.id,
