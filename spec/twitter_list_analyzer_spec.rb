@@ -2,16 +2,20 @@ require 'rails_helper'
 require 'ostruct'
 
 RSpec.describe TwitterListAnalyzer do
+
+  let(:url_identifier) { double }
+  let(:http_client) { double }
+  let(:analyzer) { TwitterListAnalyzer.new(url_identifier, http_client) }
+
   before do
-    @url_identifier = double()
-    @http_client = double()
-    @analyzer = TwitterListAnalyzer.new(@url_identifier, @http_client)
+    Tweet.create(twitter_list_id: 1,
+                 twitter_tweet_id: 1,
+                 urls: 'url1|url2|url3',
+                 analyzed: false)
 
-    Tweet.create([{:twitter_list_id => 1, :twitter_tweet_id => 1, :urls => 'url1|url2|url3', :analyzed => false }])
-
-    allow(@url_identifier).to receive(:should_be_analyzed?).with('url1').and_return(true)
-    allow(@url_identifier).to receive(:should_be_analyzed?).with('url2').and_return(true)
-    allow(@url_identifier).to receive(:should_be_analyzed?).with('url3').and_return(false)
+    allow(url_identifier).to receive(:should_be_analyzed?).with('url1').and_return(true)
+    allow(url_identifier).to receive(:should_be_analyzed?).with('url2').and_return(true)
+    allow(url_identifier).to receive(:should_be_analyzed?).with('url3').and_return(false)
 
     response = OpenStruct.new
     response.body =
@@ -28,29 +32,29 @@ RSpec.describe TwitterListAnalyzer do
           }],
           "result": [["x", 13], ["y", 12]]}'
 
-    allow(@http_client).to receive(:get).and_return(response)
+    allow(http_client).to receive(:get).and_return(response)
   end
 
   describe 'when processing tweets' do
     before do
-      @analyzer.process_pending_tweets
+      analyzer.process_pending_tweets
     end
 
     it 'identifies all urls' do
-      expect(@url_identifier).to have_received(:should_be_analyzed?).exactly(3).times
+      expect(url_identifier).to have_received(:should_be_analyzed?).exactly(3).times
     end
 
     it 'only calls nltk-service once' do
-      expect(@http_client).to have_received(:get).exactly(1).times
+      expect(http_client).to have_received(:get).exactly(1).times
     end
 
     it 'stores noun phrases in tweets' do
-      noun_phrases = Tweet.first(:twitter_tweet_id => 1).noun_phrases
-      expect(noun_phrases).to eq "x:13|y:12"
+      noun_phrases = Tweet.first(twitter_tweet_id: 1).noun_phrases
+      expect(noun_phrases).to eq 'x:13|y:12'
     end
 
     it 'marks tweets as analyzed' do
-      tweet = Tweet.first(:twitter_tweet_id => 1)
+      tweet = Tweet.first(twitter_tweet_id: 1)
       expect(tweet.analyzed).to eq true
     end
   end

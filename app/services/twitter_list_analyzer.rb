@@ -1,9 +1,7 @@
 require 'rubygems'
 require 'json'
 
-# TwitterListAnalyzer
 class TwitterListAnalyzer
-
   def initialize(url_analyzer = EntityUrlIdentifier.new, http_client = HttpClient.new)
     @url_analyzer = url_analyzer
     @http = http_client
