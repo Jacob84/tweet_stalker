@@ -54,7 +54,7 @@
       <div class="text">{{= model.get('text') }}</div>
       <div class="noun_phrase">
         <ul>
-        {{ _.each(model.get('noun_phrases').split('|'), function(name) { }} <li>{{= name }}</li> {{ }); }}
+        {{ _.each(model.get('noun_phrases'), function(noun_phrase) { }} <li>{{= noun_phrase.value }} ({{= noun_phrase.points }})</li> {{ }); }}
       </ul>
       </div>
     </div>
