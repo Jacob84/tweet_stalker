@@ -26,9 +26,10 @@ AddTrackedListsPopupView = PopupView.extend({
     result.set({'tracked': 'true'});
   },
   submit_to_server: function() {
+    var self = this;
     Backbone.sync('create', this.model, {
       success: function(collection){
-
+        self.close();
       }});
   },
   load_lists: function () {

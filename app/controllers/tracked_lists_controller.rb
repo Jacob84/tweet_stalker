@@ -15,6 +15,6 @@ class TrackedListsController < AuthenticatedApplicationController
 
     tracker.add_lists(@current_user, identifiers)
 
-    render json: 'ok'
+    render json: 'ok'.to_json, status: 200
   end
 end
