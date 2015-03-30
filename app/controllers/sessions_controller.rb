@@ -1,4 +1,3 @@
-# SessionsController
 class SessionsController < AuthenticatedApplicationController
   def create
     nickname = auth_hash[:info][:nickname]

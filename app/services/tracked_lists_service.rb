@@ -1,4 +1,3 @@
-# TrackedListsService
 class TrackedListsService
   def initialize(list_retriever = TwitterListRetriever.new)
     @list_retriever = list_retriever
