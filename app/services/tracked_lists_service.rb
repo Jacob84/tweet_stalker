@@ -31,16 +31,16 @@ class TrackedListsService
   def add_lists(user, list_identifiers)
     tracked_lists = TrackedList.find_all_by_user_id(user._id)
 
-    list_identifiers.each do |id|
-      current_tracked_list = tracked_lists.find { |x| x.twitter_list_id == id }
+    list_identifiers.each do |list|
+      current_tracked_list = tracked_lists.find { |x| x.twitter_list_id == list[:id] }
 
       if current_tracked_list.nil?
         current_tracked_list = TrackedList.new(
           user_id: user._id,
-          twitter_list_id: id,
-          tracked: true)
+          twitter_list_id: list[:id],
+          tracked: list[:tracked])
       else
-        current_tracked_list.tracked = true
+        current_tracked_list.tracked = list[:tracked]
       end
 
       current_tracked_list.save

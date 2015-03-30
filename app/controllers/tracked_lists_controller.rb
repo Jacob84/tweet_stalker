@@ -10,11 +10,14 @@ class TrackedListsController < AuthenticatedApplicationController
 
   def post
     tracker = TrackedListsService.new
-    only_tracked = params['_json'].select { |l| l[:tracked] == 'true' }
-    identifiers =  only_tracked.map { |l| l[:twitter_list_id] }
-
-    tracker.add_lists(@current_user, identifiers)
-
+    lists_hash = params['_json'].map { |l| build_list_hash(l) }
+    tracker.add_lists(@current_user, lists_hash)
     render json: 'ok'.to_json, status: 200
+  end
+
+  private
+
+  def build_list_hash(l)
+    { id: l[:twitter_list_id], tracked: l[:tracked] }
   end
 end

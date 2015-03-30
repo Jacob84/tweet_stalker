@@ -16,20 +16,23 @@ AddTrackedListsPopupView = PopupView.extend({
     });
  },
   update_collection: function(evt) {
-    id = $(evt.currentTarget).val();
+    var control = $(evt.currentTarget);
+    var id = control.val();
+    var isChecked = control.is(':checked');
 
     var result = this.model.find(function(model) {
       var numericIdentifier = parseInt(id);
       return model.get('twitter_list_id') === numericIdentifier; }
     );
 
-    result.set({'tracked': 'true'});
+    result.set({'tracked': (isChecked) ? 'true' : 'false' });
   },
   submit_to_server: function() {
     var self = this;
     Backbone.sync('create', this.model, {
       success: function(collection){
         self.close();
+        App.ReloadTrackedLists();
       }});
   },
   load_lists: function () {

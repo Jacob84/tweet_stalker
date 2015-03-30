@@ -1,7 +1,13 @@
 TrackedLists = Backbone.View.extend({
   el: '#sub_header',
   initialize: function() {
+    var self = this;
+    
     this.template = _.template($('#tracked_lists_template').html());
+
+    App.EventsHub.on(AppEvents.TRACKED_LISTS_FETCHED, function() {
+      self.load_lists();
+    });
   },
   events: {
     'click #add_new_tracked_list' : 'add_tracked_list',

@@ -50,12 +50,25 @@ var Router = Backbone.Router.extend({
 
 var App = {};
 
+var AppEvents = {
+  TRACKED_LISTS_FETCHED: 'tracked_lists_fetched'
+};
+
 $(function() {
   App.TimelineView = new ListTimelineView({ el: $("#feed") });
   App.Router = new Router();
   App.EventsHub = {};
   App.TrackedLists = new Lists();
   App.CurrentListId = null;
+
+  App.ReloadTrackedLists = function() {
+    App.TrackedLists.fetch({
+      success: function(collection){
+        App.EventsHub.trigger(AppEvents.TRACKED_LISTS_FETCHED);
+      }
+    });
+  };
+
   App.SetCurrentListRoute = function() {
     if (!App.CurrentListId) {
       if ((App.TrackedLists.models) && (App.TrackedLists.models.length > 0))

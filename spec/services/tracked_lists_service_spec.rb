@@ -49,28 +49,23 @@ RSpec.describe TrackedListsService do
   end
 
   describe 'when submiting backed lists' do
-    context 'with no previous backed lists' do
-      it 'inserts the backed list' do
-        user_lists_tracker.add_lists(user, [222])
-        tracked_list = TrackedList.find_by_user_id_and_twitter_list_id(1, 222)
-        expect(tracked_list.nil?).to be false
-      end
-    end
+    it 'inserts and updates backed list' do
+      TrackedList.create(user_id: 1, twitter_list_id: 456, tracked: false)
 
-    context 'with previous backed lists' do
-      it 'inserts and updates backed list' do
-        TrackedList.create(user_id: 1, twitter_list_id: 456, tracked: false)
+      user_lists_tracker.add_lists(user, [
+        { id: 456, tracked: true },
+        { id: 222, tracked: false },
+        { id: 333, tracked: true }])
 
-        user_lists_tracker.add_lists(user, [456, 222_222])
+      all_tracked_lists = TrackedList.find_all_by_user_id(1)
+      first_list = TrackedList.find_by_user_id_and_twitter_list_id(1, 456)
+      second_list = TrackedList.find_by_user_id_and_twitter_list_id(1, 222)
+      third_list = TrackedList.find_by_user_id_and_twitter_list_id(1, 333)
 
-        all_tracked_lists = TrackedList.find_all_by_user_id(1)
-        first_tracked_list = TrackedList.find_by_user_id_and_twitter_list_id(1, 456)
-        second_tracked_list = TrackedList.find_by_user_id_and_twitter_list_id(1, 222_222)
-
-        expect(all_tracked_lists.length).to be 2
-        expect(first_tracked_list.tracked).to be true
-        expect(second_tracked_list.tracked).to be true
-      end
+      expect(all_tracked_lists.length).to be 3
+      expect(first_list.tracked).to be true
+      expect(second_list.tracked).to be false
+      expect(third_list.tracked).to be true
     end
   end
 
