@@ -18,7 +18,7 @@
 <script type="text/template" id='tracked_lists_template'>
   <select class="styled_select" id="tracked_lists_dropdown">
     {{ _.each(model, function(model) { }}
-      <option value="{{=model.get('twitter_list_id')}}">{{=model.get('name')}}</option>
+      <option {{= (selected && model.get('twitter_list_id') == selected) ? 'selected' : '' }} value="{{=model.get('twitter_list_id')}}">{{=model.get('name')}}</option>
     {{ }); }}
   </select>
   <button id="add_new_tracked_list">+</button>

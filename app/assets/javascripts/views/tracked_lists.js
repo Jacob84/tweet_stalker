@@ -2,7 +2,7 @@ TrackedLists = Backbone.View.extend({
   el: '#sub_header',
   initialize: function() {
     var self = this;
-    
+
     this.template = _.template($('#tracked_lists_template').html());
 
     App.EventsHub.on(AppEvents.TRACKED_LISTS_FETCHED, function() {
@@ -33,6 +33,6 @@ TrackedLists = Backbone.View.extend({
   },
   render: function() {
     $(this.el).html("");
-    $(this.el).html(this.template({model: this.model.models}));
+    $(this.el).html(this.template({model: this.model.models, selected: App.CurrentListId}));
   }
 });
