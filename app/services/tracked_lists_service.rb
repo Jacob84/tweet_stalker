@@ -4,7 +4,7 @@ class TrackedListsService
   end
 
   def get_lists(user)
-    twitter_lists = []#@list_retriever.lists(user)
+    twitter_lists = @list_retriever.lists(user)
 
     tracked_lists = TrackedList.find_all_by_user_id(user._id)
 
