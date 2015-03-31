@@ -16,10 +16,11 @@
  @import "bourbon";
  @import "neat";
 
+ $background-color: #333c4e;
+
  body {
    font-family: $helvetica;
    margin:0;
-
  }
 
  button {
@@ -57,14 +58,14 @@
 
  #header {
    height: 40px;
-   background-color: #584b4f;
+   background-color: $background-color;
    margin:0;
    padding:0;
  }
 
  #sub_header {
    height: 60px;
-   background-color:#CCC;
+   background-color: $background-color;
  }
 
  .feed_tweet {

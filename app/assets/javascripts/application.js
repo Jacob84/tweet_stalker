@@ -35,16 +35,21 @@ var Router = Backbone.Router.extend({
     "load_list_timeline/:list_id": "load_list_timeline",
     "add_tracked_list": "add_tracked_list"
   },
-  init: function() {
+  render_tracked_lists: function() {
     var tracked_lists = new TrackedLists();
     tracked_lists.load_lists();
   },
+  init: function() {
+    this.render_tracked_lists();
+  },
   load_list_timeline: function(list_id) {
     App.TimelineView.loadTweets(list_id);
+    this.render_tracked_lists();
   },
   add_tracked_list: function() {
     var popup_view = new AddTrackedListsPopupView({el: '#popup_placeholder'});
     popup_view.load_lists();
+    this.render_tracked_lists();
   }
 });
 
