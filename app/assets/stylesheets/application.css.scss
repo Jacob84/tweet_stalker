@@ -18,6 +18,9 @@
 
  $background-color: #333c4e;
 
+ @import "sliding-panel";
+ @import "badges";
+
  body {
    font-family: $helvetica;
    margin:0;
@@ -61,49 +64,124 @@
    background-color: $background-color;
    margin:0;
    padding:0;
+
+   #user_info {
+     float:right;
+     padding: 5px;
+     .text {
+       float:left;
+       padding-right: 10px;
+       .username {
+         color:white;
+         font-size: 14px;
+         font-weight: bold;
+       }
+       .logout a {
+         font-size:11px;
+         color: #DDD;
+       }
+     }
+     .image {
+       float:right;
+       img {
+         width: 25px;
+         vertical-align: middle;
+       }
+     }
+   }
  }
 
  #sub_header {
    height: 60px;
    background-color: $background-color;
+   div { float:left; }
+   div h2 { color:white; font-weight: lighter; line-height: 15px; }
  }
 
- .feed_tweet {
-    width: 60%;
-    display: table;
-    font-size:13px;
-    color:#CCC;
-    margin-bottom:20px;
-    padding: 10px;
+ #tweets {
+   margin: 0 auto;
+   width: 85%;
 
-    .left {
-      @include span-columns(1);
-    }
+   .feed_tweet {
+      border-bottom: 1px solid #eee;
+      width: 100%;
+      display: table;
+      font-size:13px;
+      color:#CCC;
+      margin-bottom:20px;
+      padding: 10px;
 
-    .right {
-      @include span-columns(11);
-    }
+      .left {
+        @include span-columns(1);
+      }
 
-    .datetime { font-size: 8px; display:inline; color:#CCC }
-    .username { font-size: 14px; color: #0084B4; font-weight:light; }
-    .text { font-size: 20px; color:#000; font-weight: bold; }
-    .noun_phrase { margin-top: 5px; margin-bottom:10px; }
-    .noun_phrase ul { padding:0px; padding-top: 5px; margin:0; }
-    .noun_phrase li {
-      @include border-top-radius(5px);
-      @include border-bottom-radius(5px);
+      .right {
+        @include span-columns(11);
+      }
 
-      font-size: 9px;
-      text-transform:uppercase;
-      padding: 5px;
-      color: #FFF;
-      background-color:#0084B4;
-      opacity:0.4;
-      display:inline;
+      .datetime { font-size: 8px; display:inline; color:#CCC }
+      .username { font-size: 14px; color: #0084B4; font-weight:light; }
+      .text { font-size: 16px; color:#444; font-weight: bold; }
+      .noun_phrase { margin-top: 5px; margin-bottom:10px; }
+   }
+ }
+
+ #navigation_menu {
+  background: #fff;
+  border-bottom: 1px solid #eaecf1;
+  margin-bottom: 35px;
+  list-style-type: none;
+  height: 60px;
+  margin:0;
+  padding:0px;
+  li {
+    text-align:center;
+    border-color: #529fd2;
+    width: 200px;
+    border-bottom: 1px solid #eaecf1;
+    color: #529fd2;
+    font-size: 12.5px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 22px;
+    float:left;
+  }
+  li.selected {
+    border-color: #529fd2;
+    color: #529fd2;
+    border-bottom: 2px solid #529fd2;
+  }
+  li a {
+    text-decoration:none;
+    color: #AAA;
+  }
+  li.selected a {
+    text-decoration:none;
+    color: #529fd2;
+  }
+ }
+
+ #tracked_lists_markup {
+   .selected { background-color: #AAA; }
+   .reload_circle {
+     width:60px;
+     height:60px;
+     position:absolute;
+     right:80px;
+     top:70px;
+     border-radius:50%;
+     font-size:20px;
+     color:#fff;
+     line-height:60px;
+     text-align:center;
+     background:#4e8fc7;
+     border: 1px solid #2f7bbd;
+     cursor: pointer;
+     cursor: hand;
     }
  }
 
- img {
+ img.rounded {
   background-repeat: no-repeat;
   background-position: 50%;
   border-radius: 50%;
@@ -164,17 +242,6 @@
   margin-bottom:10px;
 }
 
-.styled_select {
-  width: 280px;
-  height: 34px;
-  overflow: hidden;
-  background: url(new_arrow.png) no-repeat right #ddd;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  font-weight: bold;
-  margin: 10px;
-}
-
 .closing_button {
   position: absolute;
   top: -15px;
@@ -197,10 +264,6 @@
   color: #E5FAEA;
   background-color: #000;
   border-color: #E5FAEA;
-}
-
-#add_new_tracked_list {
-  @extend .action_button;
 }
 
 #download_feed {

@@ -38,6 +38,7 @@ var Router = Backbone.Router.extend({
   render_tracked_lists: function() {
     var tracked_lists = new TrackedLists();
     tracked_lists.load_lists();
+    tracked_lists.register_menu();
   },
   init: function() {
     this.render_tracked_lists();
@@ -65,6 +66,25 @@ $(function() {
   App.EventsHub = {};
   App.TrackedLists = new Lists();
   App.CurrentListId = null;
+  App.CurrentList = new List();
+
+  App.CurrentListId = function() {
+    if (App.CurrentList)
+      return App.CurrentList.get('twitter_list_id');
+  };
+
+  App.SetCurrentList = function(list_id) {
+    for (var i = 0; i < App.TrackedLists.models.length; i++) {
+      var current_list_id = App.TrackedLists.models[i].get('twitter_list_id');
+
+      if (current_list_id === list_id) {
+        App.CurrentList = App.TrackedLists.models[i];
+        return;
+      }
+    }
+
+    App.CurrentList = null;
+  };
 
   App.ReloadTrackedLists = function() {
     App.TrackedLists.fetch({
@@ -75,13 +95,13 @@ $(function() {
   };
 
   App.SetCurrentListRoute = function() {
-    if (!App.CurrentListId) {
+    if (!App.CurrentListId()) {
       if ((App.TrackedLists.models) && (App.TrackedLists.models.length > 0))
-        App.CurrentListId = App.TrackedLists.models[0].get('twitter_list_id');
+        App.CurrentList = App.TrackedLists.models[0];
     }
 
-    if (App.CurrentListId)
-      App.Router.navigate('load_list_timeline/' + App.CurrentListId, {trigger: true});
+    if (App.CurrentListId())
+      App.Router.navigate('load_list_timeline/' + App.CurrentListId(), {trigger: true});
     else
       App.Router.navigate('', {trigger: true});
   };

@@ -1,0 +1,9 @@
+<div id='user_info'>
+  <div class='text'>
+    <div class='username'><%= current_user.nickname %></div>
+    <div class='logout'><a href='/auth/logout'>Click here to logout</a></div>
+  </div>
+  <div class='image'>
+    <img class='rounded' src='<%= current_user.image %>' alt='user' />
+  </div>
+</div>

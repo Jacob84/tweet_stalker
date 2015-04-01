@@ -16,13 +16,26 @@
 </script>
 
 <script type="text/template" id='tracked_lists_template'>
-  <select class="styled_select" id="tracked_lists_dropdown">
-    {{ _.each(model, function(model) { }}
-      <option {{= (selected && model.get('twitter_list_id') == selected) ? 'selected' : '' }} value="{{=model.get('twitter_list_id')}}">{{=model.get('name')}}</option>
-    {{ }); }}
-  </select>
-  <button id="add_new_tracked_list">+</button>
-  <button id="download_feed">R</button>
+  <div id='tracked_lists_markup'>
+    <div>
+      <button type="button" class="js-menu-trigger sliding-panel-button">
+        <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/menu-white.png" alt="Menu Icon">
+      </button>
+    </div>
+    <div>
+      <h2>{{= selected.get('name') }}</h2>
+    </div>
+    <nav class="js-menu sliding-panel-content">
+      <ul>
+      {{ _.each(model, function(model) { }}
+        <li><a class='tracked_list_link {{= (selected && model.get('twitter_list_id') == selected.get('twitter_list_id')) ? 'selected' : '' }}' data-id="{{=model.get('twitter_list_id')}}" href="javascript:void(0)">{{=model.get('name')}}</a></li>
+      {{ }); }}
+      <li><a href="javascript:void(0)" id='add_new_tracked_list'><i class="fa fa-plus-circle"></i> Add new list</a></li>
+      </ul>
+    </nav>
+    <div class='reload_circle' id='download_feed'><i class="fa fa-refresh"></i></div>
+  </div>
+  <div class="js-menu-screen sliding-panel-fade-screen"></div>
 </script>
 
 <script type="text/template" id="add_tracked_lists_template">
@@ -44,7 +57,7 @@
 <script type="text/template" id="tweet_template">
   <div class="feed_tweet">
     <div class="left">
-      <img src='{{= model.get('twitter_user').profile_image_url }}' alt='image' %/>
+      <img class='rounded' src='{{= model.get('twitter_user').profile_image_url }}' alt='image' %/>
     </div>
     <div class="right">
       <div class="username">
@@ -53,30 +66,28 @@
       </div>
       <div class="text">{{= model.get('text') }}</div>
       <div class="noun_phrase">
-        <ul>
-        {{ _.each(model.get('noun_phrases'), function(noun_phrase) { }} <li>{{= noun_phrase.value }} ({{= noun_phrase.points }})</li> {{ }); }}
-      </ul>
+        {{ _.each(model.get('noun_phrases'), function(noun_phrase) { }} <span class="badge-notice">{{= noun_phrase.value }}</span> {{ }); }}
       </div>
     </div>
-</div>
+  </div>
 </script>
 
 <div id="main_container">
   <div id="popup_placeholder"></div>
   <div id="header">
-    <div style='float:right; padding: 5px;'>
-      <div style='float:left; padding-right: 10px;'>
-        <div style='color:white; font-size: 14px; font-weight: bold'><%= current_user.nickname %></div>
-        <div style='font-size:11px; color: white;'><a href='/auth/logout'>Click here to logout</a></div>
-      </div>
-      <div style='float:right'>
-        <img style='width: 25px; vertical-align: middle' src='<%= current_user.image %>' alt='user' />
-      </div>
+    <div style='padding-left: 25px; padding-top:10px; float:left'>
+      <%=image_tag "xx-small.png"%>
     </div>
+    <%= render "user_info" %>
   </div>
   <div id="sub_header">
-
   </div>
+  <ul id="navigation_menu">
+    <li class='selected'><i class="fa fa-twitter"></i>&nbsp;<a href='#'>Tweets</a></li>
+    <li><a href='#'><i class="fa fa-file-code-o"></i>&nbsp;Resources</a></li>
+    <li><a href='#'><i class="fa fa-file-image-o"></i>&nbsp;Photos</a></li>
+  </ul>
+  <br style="clear:both"/>
   <div id="feed">
     <!-- main feed container -->
     <div id="tweets"></div>
