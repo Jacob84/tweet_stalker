@@ -4,7 +4,7 @@ Tweet stalker is a test application that features topic recognition over Twitter
 ![alt tag](https://raw.github.com/jacob84/tweet-stalker/master/media/capture.png)
 
 ## How it works
-*Parts of the description may be still in progress*.
+*Parts of the description may still be in progress*.
 
 The application tracks the lists selected by the user, downloading their tweets. After downloaded and saved, they are
 analyzed with Natural Language Processing algorithms to extract topics and meaning. If entities are found inside the
