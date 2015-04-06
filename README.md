@@ -1,11 +1,21 @@
 # tweet-stalker
 Tweet stalker is a test application that features topic recognition over Twitter lists.
 
+![alt tag](https://raw.github.com/jacob84/tweet-stalker/master/media/capture.png)
+
+## How it works
+*Parts of the description may still be in progress*.
+
+The application tracks the lists selected by the user, downloading their tweets. After downloaded and saved, they are
+analyzed with Natural Language Processing algorithms to extract topics and meaning. If entities are found inside the
+tweet, they are analyzed too. As their contents may vary both in structure and information, the most meaningful
+container is extracted to perform the analysis and avoid noise. All the information is backed in a noSQL database.
+
 ![alt tag](https://raw.github.com/jacob84/tweet-stalker/master/media/example2.png)
 
 ## System areas
  - **Ruby application that holds also a BackboneJS application.**
- - **Python microservice hosting NLTK associated features made with Flask.**
+ - **Python microservice hosting NLTK and HTML parsing associated features made with Flask.**
 
 ## Future
 At the current stage, only on-demand tracking is done. The desired features are:
