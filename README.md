@@ -1,5 +1,5 @@
 # tweet-stalker
-Tweet stalker is a test application that features topic recognition over Twitter lists.
+**Tweet stalker is a web application that gathers information about specific groups of people via Twitter lists and using Natural Language Processing.**
 
 ![alt tag](https://raw.github.com/jacob84/tweet-stalker/master/media/capture.png)
 
